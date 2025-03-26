@@ -1,0 +1,6 @@
+@DevFreelaaLD.API_HostAddress = http://localhost:5109
+
+GET {{DevFreelaaLD.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
