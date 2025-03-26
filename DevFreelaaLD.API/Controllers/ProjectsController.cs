@@ -1,4 +1,5 @@
 ﻿using DevFreelaaLD.API.Models;
+using DevFreelaaLD.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -9,17 +10,19 @@ namespace DevFreelaaLD.API.Controllers
     public class ProjectsController : ControllerBase
     {
         private readonly FreelanceTotalCostConfig _config;
+        private readonly IConfigServices _configServices;
 
-        public ProjectsController(IOptions<FreelanceTotalCostConfig> totalCostOptions)
+        public ProjectsController(IOptions<FreelanceTotalCostConfig> totalCostOptions, IConfigServices configServices)
         {
             _config = totalCostOptions.Value;
+            _configServices = configServices;
         }
 
         // GET // api/projects?search=crm
         [HttpGet]
-        public IActionResult Get(string search)
+        public IActionResult Get(string search = "")
         {
-            return Ok();
+            return Ok(_configServices.GetValue());
         }
 
         // GET // api/projects/123
