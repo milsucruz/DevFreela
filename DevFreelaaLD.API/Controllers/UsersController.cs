@@ -14,7 +14,7 @@ namespace DevFreelaaLD.API.Controllers
 
         public UsersController(DevFreelaDbContext dbContext)
         {
-            dbContext = _dbContext;
+            _dbContext = dbContext;
         }
 
 
@@ -24,14 +24,14 @@ namespace DevFreelaaLD.API.Controllers
             var user = _dbContext.Users
                 .Include(u => u.Skills)
                     .ThenInclude(u => u.Skill)
-                .SingleOrDefault();
+                .SingleOrDefault(u => u.Id == id);
 
             if(user is null)
                 return NotFound();
 
             var model = UserViewModel.FromEntity(user);
 
-            return Ok(user);
+            return Ok(model);
         }
 
         [HttpPost]
@@ -42,7 +42,7 @@ namespace DevFreelaaLD.API.Controllers
             _dbContext.Users.Add(user);
             _dbContext.SaveChanges();
 
-            return Ok();
+            return NoContent();
         }
 
         [HttpPost("{id}/skills")]

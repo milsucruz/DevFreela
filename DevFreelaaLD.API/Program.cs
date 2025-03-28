@@ -1,4 +1,3 @@
-using DevFreelaaLD.API.Controllers;
 using DevFreelaaLD.API.ExceptionHandler;
 using DevFreelaaLD.API.Persistence;
 using DevFreelaaLD.API.Services;
@@ -10,7 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<IConfigServices, ConfigService>();
 
-builder.Services.AddDbContext<DevFreelaDbContext>(db => db.UseInMemoryDatabase("DevFreelaDb"));
+//Memória
+//builder.Services.AddDbContext<DevFreelaDbContext>(db => db.UseInMemoryDatabase("DevFreelaDb"));
+
+//SQL
+var connectionString = builder.Configuration.GetConnectionString("DevFreela");
+builder.Services.AddDbContext<DevFreelaDbContext>(o => o.UseSqlServer(connectionString));
 
 builder.Services.AddExceptionHandler<ApiExceptionHandler>();
 builder.Services.AddProblemDetails();

@@ -13,7 +13,7 @@ namespace DevFreelaaLD.API.Controllers
 
         public SkillsController(DevFreelaDbContext dbContext)
         {
-            dbContext = _dbContext;
+            _dbContext = dbContext;
         }
 
         [HttpGet]

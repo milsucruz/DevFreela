@@ -43,7 +43,7 @@ namespace DevFreelaaLD.API.Controllers
 
             var model = ProjectViewModel.FromEntity(projects);
 
-            return Ok();
+            return Ok(model);
         }
 
         // POST // api/projects
