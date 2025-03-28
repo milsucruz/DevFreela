@@ -36,7 +36,7 @@ namespace DevFreelaaLD.API.Models
         public List<string> Comments { get; private set; }
 
         public static ProjectViewModel FromEntity(Project entity)
-            => new(entity.id, entity.Title, entity.Description, entity.Client.FullName, entity.IdClient,
+            => new(entity.Id, entity.Title, entity.Description, entity.Client.FullName, entity.IdClient,
                 entity.IdFreelancer, entity.FreeLancer.FullName, entity.TotalCost, entity.Comments);
     }
 }

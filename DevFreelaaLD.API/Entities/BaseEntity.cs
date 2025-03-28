@@ -8,7 +8,7 @@
             IsDeleted = false;
         }
 
-        public int id { get; private set; }
+        public int Id { get; private set; }
 
         public DateTime CreationDate { get; private set; }
 
