@@ -8,9 +8,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.Configure<FreelanceTotalCostConfig>(
-    builder.Configuration.GetSection("FreelanceTotalCostConfig"));
-
 builder.Services.AddSingleton<IConfigServices, ConfigService>();
 
 builder.Services.AddDbContext<DevFreelaDbContext>(db => db.UseInMemoryDatabase("DevFreelaDb"));

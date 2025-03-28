@@ -6,13 +6,12 @@ namespace DevFreelaaLD.API.Entities
     {
         protected Project() { }
 
-        public Project(string title, string description, int idClient, int idFreelancer, User freeLancer, decimal totalCost, ProjectStatusEnum status)
+        public Project(string title, string description, int idClient, int idFreelancer, decimal totalCost)
         {
             Title = title;
             Description = description;
             IdClient = idClient;
             IdFreelancer = idFreelancer;
-            FreeLancer = freeLancer;
             TotalCost = totalCost;
             Status = ProjectStatusEnum.Created;
             Comments = [];

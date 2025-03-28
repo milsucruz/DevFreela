@@ -1,4 +1,6 @@
-﻿namespace DevFreelaaLD.API.Models
+﻿using DevFreelaaLD.API.Entities;
+
+namespace DevFreelaaLD.API.Models
 {
     public class ProjectItemViewModel
     {
@@ -20,5 +22,8 @@
         public string FreelancerName { get; private set; }
 
         public decimal TotalCost { get; private set; }
+
+        public static ProjectItemViewModel FromEntity(Project project)
+            => new (project.Id, project.Title, project.Client.FullName, project.FreeLancer.FullName, project.TotalCost);
     }
 }

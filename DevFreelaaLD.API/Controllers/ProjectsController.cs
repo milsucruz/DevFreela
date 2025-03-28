@@ -1,6 +1,8 @@
-﻿using DevFreelaaLD.API.Models;
+﻿using DevFreelaaLD.API.Entities;
+using DevFreelaaLD.API.Models;
 using DevFreelaaLD.API.Persistence;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevFreelaaLD.API.Controllers
 {
@@ -19,13 +21,28 @@ namespace DevFreelaaLD.API.Controllers
         [HttpGet]
         public IActionResult Get(string search = "")
         {
-            return Ok();
+            var projects = _dbContext.Projects
+                .Include(p => p.Client)
+                .Include(p => p.FreeLancer)
+                .Where(p => !p.IsDeleted).ToList();
+
+            var model = projects.Select(ProjectItemViewModel.FromEntity).ToList();
+
+            return Ok(model);
         }
 
         // GET // api/projects/123
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
+            var projects = _dbContext.Projects
+                .Include(p => p.Client)
+                .Include(p => p.FreeLancer)
+                .Include(p => p.Comments)
+                .SingleOrDefault(p => p.Id == id);
+
+            var model = ProjectViewModel.FromEntity(projects);
+
             return Ok();
         }
 
@@ -33,6 +50,11 @@ namespace DevFreelaaLD.API.Controllers
         [HttpPost]
         public IActionResult Post(CreateProjectInputModel projectInputModel)
         {
+            var projects = projectInputModel.ToEntity();
+
+            _dbContext.Projects.Add(projects);
+            _dbContext.SaveChanges();
+
             return CreatedAtAction(nameof(GetById), new {id = 1}, projectInputModel);
         }
 
@@ -40,6 +62,16 @@ namespace DevFreelaaLD.API.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, UpdateProjectInputModel updateProjectInputModel)
         {
+            var project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
+
+            if(project is null)
+                return NotFound();
+
+            project.Update(updateProjectInputModel.Title, updateProjectInputModel.Description, updateProjectInputModel.TotalCost);
+
+            _dbContext.Update(project);
+            _dbContext.SaveChanges();
+
             return NoContent();
         }
 
@@ -47,6 +79,16 @@ namespace DevFreelaaLD.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
+            var project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
+
+            if (project is null)
+                return NotFound();
+
+            project.SetAsDeleted();
+
+            _dbContext.Update(project);
+            _dbContext.SaveChanges();
+
             return NoContent();
         }
 
@@ -55,6 +97,16 @@ namespace DevFreelaaLD.API.Controllers
         [HttpPut("{id}/start")]
         public IActionResult Start(int id)
         {
+            var project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
+
+            if (project is null)
+                return NotFound();
+
+            project.Start();
+
+            _dbContext.Update(project);
+            _dbContext.SaveChanges();
+
             return NoContent();
         }
 
@@ -63,6 +115,16 @@ namespace DevFreelaaLD.API.Controllers
         [HttpPut("{id}/complete")]
         public IActionResult Complete(int id)
         {
+            var project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
+
+            if (project is null)
+                return NotFound();
+
+            project.Complete();
+
+            _dbContext.Update(project);
+            _dbContext.SaveChanges();
+
             return NoContent();
         }
 
@@ -70,6 +132,16 @@ namespace DevFreelaaLD.API.Controllers
         [HttpPost("{id}/comments")]
         public IActionResult PostComment(int id, CreateProjectCommentInputModel commentInputModel)
         {
+            var project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
+
+            if (project is null)
+                return NotFound();
+
+            var comment = new ProjectComment(commentInputModel.Content, commentInputModel.IdProject, commentInputModel.IdUser);
+
+            _dbContext.ProjectComments.Add(comment);
+            _dbContext.SaveChanges();
+
             return Ok();
         }
     }

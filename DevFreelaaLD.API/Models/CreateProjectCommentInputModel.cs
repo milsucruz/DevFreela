@@ -2,7 +2,7 @@
 {
     public class CreateProjectCommentInputModel
     {
-        public string IdProject { get; set; }
+        public int IdProject { get; set; }
 
         public string Content { get; set; }
 

@@ -1,4 +1,6 @@
-﻿namespace DevFreelaaLD.API.Models
+﻿using DevFreelaaLD.API.Entities;
+
+namespace DevFreelaaLD.API.Models
 {
     public class CreateProjectInputModel
     {
@@ -8,8 +10,11 @@
 
         public int IdClient { get; set; }
 
-        public int IdFreeLancerId { get; set; }
+        public int IdFreeLancer { get; set; }
 
         public decimal TotalCost { get; set; }
-    }
+
+        public Project ToEntity()
+            => new Project(Title, Description, IdClient, IdFreeLancer, TotalCost);
+    } 
 }
