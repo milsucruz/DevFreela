@@ -1,7 +1,5 @@
 ﻿using DevFreelaaLD.API.Models;
-using DevFreelaaLD.API.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace DevFreelaaLD.API.Controllers
 {
@@ -9,20 +7,17 @@ namespace DevFreelaaLD.API.Controllers
     [Route("api/controller")]
     public class ProjectsController : ControllerBase
     {
-        private readonly FreelanceTotalCostConfig _config;
-        private readonly IConfigServices _configServices;
 
-        public ProjectsController(IOptions<FreelanceTotalCostConfig> totalCostOptions, IConfigServices configServices)
+        public ProjectsController()
         {
-            _config = totalCostOptions.Value;
-            _configServices = configServices;
+
         }
 
         // GET // api/projects?search=crm
         [HttpGet]
         public IActionResult Get(string search = "")
         {
-            return Ok(_configServices.GetValue());
+            return Ok();
         }
 
         // GET // api/projects/123
@@ -36,9 +31,6 @@ namespace DevFreelaaLD.API.Controllers
         [HttpPost]
         public IActionResult Post(CreateProjectInputModel projectInputModel)
         {
-            if (projectInputModel.TotalCost < _config.Maximum || projectInputModel.TotalCost > _config.Minimum)
-                return BadRequest("number out of bounds.");
-
             return CreatedAtAction(nameof(GetById), new {id = 1}, projectInputModel);
         }
 

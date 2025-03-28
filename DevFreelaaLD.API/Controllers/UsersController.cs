@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DevFreelaaLD.API.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DevFreelaaLD.API.Controllers
 {
@@ -7,9 +8,15 @@ namespace DevFreelaaLD.API.Controllers
     public class UsersController : ControllerBase
     {
         [HttpPost]
-        public IActionResult Post()
+        public IActionResult Post(CreateUserInputModel userInputModel)
         {
             return Ok();
+        }
+
+        [HttpPost("{id}/skills")]
+        public IActionResult PostSkills(UserSkillsInputModel userSkillsInputModel)
+        {
+            return NoContent();
         }
 
         [HttpPut("{id}/profile-picture")]

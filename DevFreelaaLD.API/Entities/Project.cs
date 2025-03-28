@@ -6,7 +6,7 @@ namespace DevFreelaaLD.API.Entities
     {
         protected Project() { }
 
-        public Project(string title, string description, int idClient, int idFreelancer, User freeLancer, decimal totalCost, ProjectStatusEnum status, List<ProjectComment> comments)
+        public Project(string title, string description, int idClient, int idFreelancer, User freeLancer, decimal totalCost, ProjectStatusEnum status)
         {
             Title = title;
             Description = description;

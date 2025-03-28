@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DevFreelaaLD.API.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DevFreelaaLD.API.Controllers
 {
@@ -13,7 +14,7 @@ namespace DevFreelaaLD.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post() 
+        public IActionResult Post(CreateSkillInputModel skillInputModel) 
         {
             return Ok();
         }
