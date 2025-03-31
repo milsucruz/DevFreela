@@ -1,6 +1,7 @@
-using DevFreelaaLD.API.ExceptionHandler;
-using DevFreelaaLD.API.Services;
-using DevFreelaaLD.Infrastructure.Persistence;
+using DevFreela.Infrastructure.Persistence;
+using DevFreela.API.ExceptionHandler;
+using DevFreela.API.Services;
+using DevFreela.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

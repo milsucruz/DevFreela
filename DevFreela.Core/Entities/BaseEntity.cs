@@ -1,4 +1,4 @@
-﻿namespace DevFreelaaLD.Core.Entities
+﻿namespace DevFreela.Core.Entities
 {
     public class BaseEntity
     {

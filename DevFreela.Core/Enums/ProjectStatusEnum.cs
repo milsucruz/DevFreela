@@ -1,4 +1,4 @@
-﻿namespace DevFreelaaLD.Core.Enums
+﻿namespace DevFreela.Core.Enums
 {
     public enum ProjectStatusEnum
     {

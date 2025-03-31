@@ -1,4 +1,4 @@
-﻿namespace DevFreelaaLD.API.Services
+﻿namespace DevFreela.API.Services
 {
     public interface IConfigServices
     {

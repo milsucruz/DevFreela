@@ -1,6 +1,6 @@
-﻿using DevFreelaaLD.Core.Enums;
+﻿using DevFreela.Core.Enums;
 
-namespace DevFreelaaLD.Core.Entities
+namespace DevFreela.Core.Entities
 {
     public class Project : BaseEntity
     {
