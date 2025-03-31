@@ -1,10 +1,11 @@
-﻿using DevFreelaaLD.API.Enums;
+﻿using DevFreelaaLD.Core.Enums;
 
-namespace DevFreelaaLD.API.Entities
+namespace DevFreelaaLD.Core.Entities
 {
     public class Project : BaseEntity
     {
-        protected Project() { }
+        protected Project()
+        { }
 
         public Project(string title, string description, int idClient, int idFreelancer, decimal totalCost)
         {

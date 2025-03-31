@@ -1,6 +1,6 @@
-﻿using DevFreelaaLD.API.Entities;
+﻿using DevFreelaaLD.Core.Entities;
 
-namespace DevFreelaaLD.API.Models
+namespace DevFreelaaLD.Application.Models
 {
     public class UserViewModel
     {

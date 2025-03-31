@@ -1,4 +1,4 @@
-﻿namespace DevFreelaaLD.API.Entities
+﻿namespace DevFreelaaLD.Core.Entities
 {
     public class Skill : BaseEntity
     {

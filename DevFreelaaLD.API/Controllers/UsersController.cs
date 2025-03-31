@@ -1,6 +1,6 @@
-﻿using DevFreelaaLD.API.Entities;
-using DevFreelaaLD.API.Models;
-using DevFreelaaLD.API.Persistence;
+﻿using DevFreelaaLD.Application.Models;
+using DevFreelaaLD.Core.Entities;
+using DevFreelaaLD.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +17,6 @@ namespace DevFreelaaLD.API.Controllers
             _dbContext = dbContext;
         }
 
-
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -26,7 +25,7 @@ namespace DevFreelaaLD.API.Controllers
                     .ThenInclude(u => u.Skill)
                 .SingleOrDefault(u => u.Id == id);
 
-            if(user is null)
+            if (user is null)
                 return NotFound();
 
             var model = UserViewModel.FromEntity(user);

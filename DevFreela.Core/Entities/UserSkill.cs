@@ -1,4 +1,4 @@
-﻿namespace DevFreelaaLD.API.Entities
+﻿namespace DevFreelaaLD.Core.Entities
 {
     public class UserSkill : BaseEntity
     {
@@ -8,7 +8,7 @@
             IdSkill = idSkill;
         }
 
-        public int IdUser {  get; private set; }
+        public int IdUser { get; private set; }
 
         public User User { get; private set; }
 

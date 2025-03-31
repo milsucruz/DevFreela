@@ -1,6 +1,6 @@
-﻿using DevFreelaaLD.API.Entities;
-using DevFreelaaLD.API.Models;
-using DevFreelaaLD.API.Persistence;
+﻿using DevFreelaaLD.Application.Models;
+using DevFreelaaLD.Core.Entities;
+using DevFreelaaLD.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevFreelaaLD.API.Controllers
@@ -25,7 +25,7 @@ namespace DevFreelaaLD.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(CreateSkillInputModel skillInputModel) 
+        public IActionResult Post(CreateSkillInputModel skillInputModel)
         {
             var skill = new Skill(skillInputModel.Description);
 

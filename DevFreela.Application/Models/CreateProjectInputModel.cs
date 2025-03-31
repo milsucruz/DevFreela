@@ -1,6 +1,6 @@
-﻿using DevFreelaaLD.API.Entities;
+﻿using DevFreelaaLD.Core.Entities;
 
-namespace DevFreelaaLD.API.Models
+namespace DevFreelaaLD.Application.Models
 {
     public class CreateProjectInputModel
     {
@@ -16,5 +16,5 @@ namespace DevFreelaaLD.API.Models
 
         public Project ToEntity()
             => new Project(Title, Description, IdClient, IdFreeLancer, TotalCost);
-    } 
+    }
 }

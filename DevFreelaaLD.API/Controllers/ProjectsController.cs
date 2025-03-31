@@ -1,6 +1,6 @@
-﻿using DevFreelaaLD.API.Entities;
-using DevFreelaaLD.API.Models;
-using DevFreelaaLD.API.Persistence;
+﻿using DevFreelaaLD.Application.Models;
+using DevFreelaaLD.Core.Entities;
+using DevFreelaaLD.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -58,7 +58,7 @@ namespace DevFreelaaLD.API.Controllers
             _dbContext.Projects.Add(projects);
             _dbContext.SaveChanges();
 
-            return CreatedAtAction(nameof(GetById), new {id = 1}, projectInputModel);
+            return CreatedAtAction(nameof(GetById), new { id = 1 }, projectInputModel);
         }
 
         // PUT // api/projects/123
@@ -67,7 +67,7 @@ namespace DevFreelaaLD.API.Controllers
         {
             var project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
 
-            if(project is null)
+            if (project is null)
                 return NotFound();
 
             project.Update(updateProjectInputModel.Title, updateProjectInputModel.Description, updateProjectInputModel.TotalCost);
@@ -95,7 +95,6 @@ namespace DevFreelaaLD.API.Controllers
             return NoContent();
         }
 
-
         // PUT // api/projects/123/start
         [HttpPut("{id}/start")]
         public IActionResult Start(int id)
@@ -112,7 +111,6 @@ namespace DevFreelaaLD.API.Controllers
 
             return NoContent();
         }
-
 
         // PUT // api/projects/123/complete
         [HttpPut("{id}/complete")]

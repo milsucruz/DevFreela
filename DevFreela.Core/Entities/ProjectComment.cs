@@ -1,4 +1,4 @@
-﻿namespace DevFreelaaLD.API.Entities
+﻿namespace DevFreelaaLD.Core.Entities
 {
     public class ProjectComment : BaseEntity
     {
@@ -12,7 +12,7 @@
         public string Content { get; set; }
 
         public int IdProject { get; set; }
-        
+
         public Project Project { get; set; }
 
         public int IdUser { get; set; }
