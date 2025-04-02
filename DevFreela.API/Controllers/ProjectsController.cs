@@ -1,7 +1,17 @@
-﻿using DevFreela.Application.Models;
+﻿using DevFreela.Application.Commands.CompleteProject;
+using DevFreela.Application.Commands.DeleteProject;
+using DevFreela.Application.Commands.InsertComment;
+using DevFreela.Application.Commands.InsertProject;
+using DevFreela.Application.Commands.StartProject;
+using DevFreela.Application.Commands.UpdateProject;
+using DevFreela.Application.Models;
+using DevFreela.Application.Querys.GetAllProjects;
+using DevFreela.Application.Querys.GetProjectById;
 using DevFreela.Application.Services;
 using DevFreela.Infrastructure.Persistence;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace DevFreelaaLD.API.Controllers
 {
@@ -11,29 +21,33 @@ namespace DevFreelaaLD.API.Controllers
     {
         private readonly DevFreelaDbContext _dbContext;
         private readonly IProjectServices _services;
+        private readonly IMediator _mediator;
 
-        public ProjectsController(DevFreelaDbContext dbContext, IProjectServices services)
+        public ProjectsController(IProjectServices services, IMediator mediator)
         {
-            _dbContext = dbContext;
             _services = services;
+            _mediator = mediator;
         }
 
         // GET // api/projects?search=crm
         [HttpGet]
-        public IActionResult Get(string search = "", int page = 0, int size = 3)
+        public async Task<IActionResult> Get(string search = "")
         {
-            var result = _services.GetAll();
+            var query = new GetAllProjectsQuery();
+
+            var result = await _mediator.Send(query);
 
             return Ok(result);
         }
 
         // GET // api/projects/123
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var result = _services.GetById(id);
 
-            if(!result.IsSuccess)
+            var result = await _mediator.Send(new GetProjectByIdQuery(id));
+
+            if (!result.IsSuccess)
                 return BadRequest(result.Message);
 
             return Ok(result);
@@ -41,18 +55,18 @@ namespace DevFreelaaLD.API.Controllers
 
         // POST // api/projects
         [HttpPost]
-        public IActionResult Post(CreateProjectInputModel projectInputModel)
+        public async Task<IActionResult> PostAsync(InsertProjectCommand insertProjectCommand)
         {
-            var result = _services.Insert(projectInputModel);
+            var result = await _mediator.Send(insertProjectCommand);
 
-            return CreatedAtAction(nameof(GetById), new { id = result.Data }, projectInputModel);
+            return CreatedAtAction(nameof(GetById), new { id = result.Data }, insertProjectCommand);
         }
 
         // PUT // api/projects/123
         [HttpPut("{id}")]
-        public IActionResult Put(int id, UpdateProjectInputModel updateProjectInputModel)
+        public async Task<IActionResult> Put(int id, UpdateProjectCommand updateProjectCommand)
         {
-            var result = _services.Update(updateProjectInputModel);
+            var result = await _mediator.Send(updateProjectCommand);
 
             if (!result.IsSuccess)
                 return BadRequest(result.Message);
@@ -62,9 +76,9 @@ namespace DevFreelaaLD.API.Controllers
 
         // DELETE // api/projects/123
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var result = _services.Delete(id);
+            var result = await _mediator.Send(new DeleteProjectCommand(id));
 
             if (!result.IsSuccess)
                 return BadRequest(result.Message);
@@ -74,9 +88,9 @@ namespace DevFreelaaLD.API.Controllers
 
         // PUT // api/projects/123/start
         [HttpPut("{id}/start")]
-        public IActionResult Start(int id)
+        public async Task<IActionResult> Start(int id)
         {
-            var result = _services.Start(id);
+            var result = await _mediator.Send(new StartProjectCommand(id));
 
             if (!result.IsSuccess)
                 return BadRequest(result.Message);
@@ -86,9 +100,9 @@ namespace DevFreelaaLD.API.Controllers
 
         // PUT // api/projects/123/complete
         [HttpPut("{id}/complete")]
-        public IActionResult Complete(int id)
+        public async Task<IActionResult> Complete(int id)
         {
-            var result = _services.Complete(id);
+            var result = await _mediator.Send(new CompleteProjectCommand(id));
 
             if (!result.IsSuccess)
                 return BadRequest(result.Message);
@@ -98,9 +112,9 @@ namespace DevFreelaaLD.API.Controllers
 
         // POST // api/projects/123/comments
         [HttpPost("{id}/comments")]
-        public IActionResult PostComment(int id, CreateProjectCommentInputModel commentInputModel)
+        public async Task<IActionResult> PostComment(int id, InsertCommentCommand insertCommentCommand)
         {
-            var result = _services.Complete(id);
+            var result = await _mediator.Send(insertCommentCommand);
 
             if (!result.IsSuccess)
                 return BadRequest(result.Message);
