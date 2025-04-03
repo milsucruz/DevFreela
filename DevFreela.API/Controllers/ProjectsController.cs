@@ -19,7 +19,6 @@ namespace DevFreelaaLD.API.Controllers
     [Route("api/controller")]
     public class ProjectsController : ControllerBase
     {
-        private readonly DevFreelaDbContext _dbContext;
         private readonly IProjectServices _services;
         private readonly IMediator _mediator;
 
@@ -55,9 +54,12 @@ namespace DevFreelaaLD.API.Controllers
 
         // POST // api/projects
         [HttpPost]
-        public async Task<IActionResult> PostAsync(InsertProjectCommand insertProjectCommand)
+        public async Task<IActionResult> Post(InsertProjectCommand insertProjectCommand)
         {
             var result = await _mediator.Send(insertProjectCommand);
+
+            if (!result.IsSuccess)
+                return BadRequest(result.Message);
 
             return CreatedAtAction(nameof(GetById), new { id = result.Data }, insertProjectCommand);
         }
