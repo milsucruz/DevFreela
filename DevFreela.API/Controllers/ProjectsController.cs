@@ -4,14 +4,10 @@ using DevFreela.Application.Commands.InsertComment;
 using DevFreela.Application.Commands.InsertProject;
 using DevFreela.Application.Commands.StartProject;
 using DevFreela.Application.Commands.UpdateProject;
-using DevFreela.Application.Models;
 using DevFreela.Application.Querys.GetAllProjects;
 using DevFreela.Application.Querys.GetProjectById;
-using DevFreela.Application.Services;
-using DevFreela.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace DevFreelaaLD.API.Controllers
 {
@@ -19,12 +15,10 @@ namespace DevFreelaaLD.API.Controllers
     [Route("api/controller")]
     public class ProjectsController : ControllerBase
     {
-        private readonly IProjectServices _services;
         private readonly IMediator _mediator;
 
-        public ProjectsController(IProjectServices services, IMediator mediator)
+        public ProjectsController(IMediator mediator)
         {
-            _services = services;
             _mediator = mediator;
         }
 
